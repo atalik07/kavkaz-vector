@@ -553,7 +553,14 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     gap: 24px; /* Отступ между блоком с телефоном и картой */
 } 
 
-.contacts-card, .contact-form { background: var(--color-bg-card); border-radius: var(--radius-card); padding: 20px; border: 1px solid var(--color-border-soft); }
+.contacts-card, .contact-form { 
+    background: var(--color-bg-card);
+     border-radius: var(--radius-card); padding: 20px; 
+     border: 1px solid var(--color-border-soft);
+     display: flex;          /* Включаем Flexbox */
+     flex-direction: column; /* Элементы внутри пойдут друг под другом */
+    }
+.contact-form { height: 100%; }    
 .contacts-list { list-style: none; padding: 0; font-size: var(--font-body); }
 .contacts-list li { margin-bottom: 10px; }
 .contacts-label { display: inline-block; min-width: 110px; color: var(--color-text-soft); }
@@ -575,7 +582,8 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
 .form-row { display: flex; gap: 18px; margin-bottom: 14px; }
 .form-field { flex: 1; display: flex; flex-direction: column; gap: 5px; font-size: var(--font-body); }
-.form-field input, .form-field textarea { border-radius: var(--radius-input); border: 1px solid rgba(255,255,255,0.18); background: var(--color-bg-main); padding: 9px 10px; color: #fff; outline: none; }
+.form-field input, .form-field textarea { border-radius: var(--radius-input); border: 1px solid rgba(255,255,255,0.18); background: var(--color-bg-main); padding: 9px 10px; color: #fff; outline: none; resize:none; }
+.form-field textarea { flex-grow: 1; }
 .form-field input:focus, .form-field textarea:focus { border-color: var(--color-accent); background: var(--color-bg-main); }
 
 .footer { border-top: 1px solid rgba(255,255,255,0.08); background: var(--color-bg-card); padding: 18px 0; font-size: .8vw; color: var(--color-text-muted); }
