@@ -42,6 +42,7 @@
     --color-border-header: rgba(255, 255, 255, 0.18);
 
     --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+    --shadow-soft-carousel: 0 5px 13px rgba(0, 0, 0, 0.1);
 
     --radius-card: 1.2vw;
     --radius-pill: 999px;
@@ -149,7 +150,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .preloader-inner { text-align: center; }
 .preloader-logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; }
 .preloader-logo .logo-icon { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, #ffe9da 0, #ff4b2b 40%, #e6351a 100%); }
-.preloader-logo .logo-text { font-size: 14px; text-transform: uppercase; color: var(--color-text-muted); }
+.preloader-logo .logo-text { font-size: var(--font-body); text-transform: uppercase; color: var(--color-text-muted); }
 .spinner { width: 38px; height: 38px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.14); border-top-color: var(--color-accent); animation: spin 0.9s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -255,33 +256,31 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* Hero ------------------------------------------------------------- */
-.hero { 
-    position: relative; 
-    min-height: 100vh; 
-    color: #ffffff; 
-    overflow: hidden; 
-    display: flex; 
-    flex-direction: column; 
-    /* ГЛАВНОЕ: Прижимаем всё содержимое к низу экрана */
+
+.hero {
+    /* Настройки позиционирования и контента */
+    position: relative;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
     justify-content: flex-end; 
+    color: #ffffff;
+    overflow: hidden;
+    
+    /* --- ГЛАВНОЕ: ОБЪЕДИНЯЕМ ФОНЫ --- */
+    
+    /* 1. Верхний слой: наш градиент */
+    background: 
+        linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(2, 4, 11, 0) 55%, rgba(2, 4, 11, 0.6) 85%, var(--color-bg-main) 100%),
+    
+    /* 2. Нижний слой: наша картинка */
+        url("../img/hero-elbrus.jpg");
+
+    /* --- Свойства для картинки (нижнего слоя) --- */
+    background-size: cover;
+    background-position: top center;
 }
 
-.hero-bg { 
-    position: absolute; 
-    inset: 0; 
-    background-image: url("../img/hero-elbrus.jpg"); 
-    background-size: cover; 
-    background-position: top center; 
-    transform: scale(1.03); 
-    z-index: -2; 
-}
-
-.hero-overlay-gradient { 
-    position: absolute; 
-    inset: 0; 
-    background: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(2, 4, 11, 0) 55%, rgba(2, 4, 11, 0.6) 85%, var(--color-bg-main) 100%); 
-    z-index: -1; 
-}
 
 .hero-inner { 
     position: relative; 
@@ -404,8 +403,25 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .hero-scroll-hint .scroll-line { display: block; width: 1px; height: 5vh; margin: 10px auto 0; background: linear-gradient(to bottom, rgba(255,255,255,0.55), rgba(255,255,255,0)); }
 
 /* Common Sections -------------------------------------------------- */
-.section { padding: var(--section-gap) 0; }
-.section-dark { background: none; }
+/* Универсальные стили для всех секций-слайдов */
+.section-tours,
+.section-about,
+.section-contacts {
+    /* ЖЕСТКАЯ ВЫСОТА: 100% видимой части экрана (работает на мобильных) */
+    height: 100dvh; 
+
+    /* Включаем Flexbox для вертикального центрирования контента */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* <<< Ключевое свойство для центрирования */
+
+    /* Отступы, чтобы контент не прилипал к краям */
+    padding-top: var(--header-height); /* Отступ от шапки */
+    padding-bottom: 2vh;
+    box-sizing: border-box; /* Чтобы padding не ломал высоту в 100dvh */
+    position: relative; /* Нужно для корректной работы дочерних элементов */
+    background: var(--color-bg-main); /* <<< ВОТ ЭТА СТРОКА */
+}
 .section-header { text-align: center; margin-bottom: 30px; }
 .section-kicker { margin: 0 0 8px; font-size: var(--font-subtitle); letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-soft); }
 .section-title { margin: 0; font-size: var(--font-h2); letter-spacing: 0.12em; text-transform: uppercase; }
@@ -420,15 +436,14 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 }
 
 /* Tours ------------------------------------------------------------ */
-.section-tours { 
-    background: transparent !important; 
-    position: relative;
-    padding-top: calc(var(--header-height) + 20px); 
-}
 
-.tours-carousel { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max(240px, 22vw), 1fr); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0; scrollbar-width: none; }
+.tours-carousel { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max(240px, 22vw), 1fr); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1vh; scrollbar-width: none; }
 .tours-carousel::-webkit-scrollbar { display: none; }
-.tour-card { scroll-snap-align: start; background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-soft); border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; transition: 0.2s; }
+.tour-card { scroll-snap-align: start; background: var(--color-bg-card); 
+    border-radius: var(--radius-card); overflow: hidden; 
+    box-shadow: var(--shadow-soft-carousel); 
+    border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; 
+    transition: 0.2s; }
 .tour-img { position: relative; padding-top: 62%; overflow: hidden; }
 .tour-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
 .tour-card:hover .tour-img img { transform: scale(1.08); }
@@ -585,22 +600,6 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
 
 /* ================================================================= */
-/* АДАПТИВ (DESKTOP) - Растягиваем секции и центрируем */
-/* ================================================================= */
-@media (min-width: 1024px) {
-    .section-tours, .section-about, .section-contacts {
-        min-height: 100vh;
-        display: flex; 
-        flex-direction: column; 
-        justify-content: center; /* Центруем контент по вертикали */
-        
-        /* Добавляем отступ сверху, чтобы шапка не перекрывала */
-        padding-top: calc(var(--header-height) + 40px);
-        padding-bottom: 60px;
-    }
-}
-
-/* ================================================================= */
 /* АДАПТИВ (MOBILE & TABLET) */
 /* ================================================================= */
 @media (max-width: 1023px) {
@@ -725,7 +724,8 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     .adv-card:active .adv-text { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     .adv-text::before { content: ""; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); border-width: 0 5px 5px 5px; border-style: solid; border-color: transparent transparent rgba(17,22,30,0.95) transparent; }
 
-    .section { padding: 60px 0 !important; height: auto !important; min-height: 100vh; display: block; scroll-margin-top: 80px; }
+    .section { padding: 60px 0 !important; height: auto !important; 
+        min-height: auto !important; display: block; scroll-margin-top: 80px; }
 
     .section-tours { margin-top: 0 !important; background: var(--color-bg-main) !important; padding-top: 80px !important; z-index: 2; position: relative; }
     .about-inner, .contacts-inner { display: flex; flex-direction: column; }
@@ -748,4 +748,3 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 @media (max-width: 450px) {
     .hero-content { padding-left: 20px !important; padding-right: 20px !important; }
 }
-
