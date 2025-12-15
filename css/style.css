@@ -1,0 +1,690 @@
+@font-face {
+    font-family: "Gilroy";
+    src: url("fonts/gilroy-regular.tff") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gilroy";
+    src: url("fonts/gilroy-bold.tff") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gilroy";
+    src: url("fonts/gilroy-extrabold.tff") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --color-bg-main: #0f121b;
+    --color-bg-alt: #11161e;
+    --color-bg-card: #151b25;
+    --color-bg-hero-overlay: rgba(7, 11, 16, 0.8);
+
+    --color-text-main: #f5f5f7;
+    --color-text-muted: #a4abb7;
+    --color-text-soft: #7c8391;
+    --color-text-dark: #05070b;
+
+    --color-accent: #ff4b2b;
+    /* Soft accent for active state (тусклый оранжевый) */
+    --color-accent-soft: rgba(255, 75, 43, 0.7); 
+    --color-accent-bg: rgba(255, 75, 43, 0.35);
+
+    --color-border-soft: rgba(255, 255, 255, 0.08);
+    --color-border-header: rgba(255, 255, 255, 0.18);
+
+    --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+
+    --radius-card: 14px;
+    --radius-pill: 999px;
+
+    --transition-fast: 0.2s ease-out;
+    --transition-base: 0.3s ease-out;
+    --transition-slow: 0.5s ease-out;
+
+    --header-height: 76px;
+
+    --font-sans: "Gilroy", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-display: "Gilroy", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Base resets */
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg-main);
+    color: var(--color-text-main);
+    font-family: var(--font-sans);
+    overflow-x: hidden; 
+}
+
+body.no-scroll { overflow: hidden; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+h1, h2, h3, .section-title, .form-title, .logo-title {
+    font-family: var(--font-display);
+}
+
+/* Animations -------------------------------------------------------- */
+.section-anim { opacity: 0; }
+.section-anim > *:first-child { transform: translate3d(0, 24px, 0); }
+.section-anim[data-anim-direction="up"] > *:first-child { transform: translate3d(0, 24px, 0); }
+.section-anim[data-anim-direction="down"] > *:first-child { transform: translate3d(0, -24px, 0); }
+.section-anim[data-anim-direction="left"] > *:first-child { transform: translate3d(24px, 0, 0); }
+.section-anim[data-anim-direction="right"] > *:first-child { transform: translate3d(-24px, 0, 0); }
+
+.section-anim.section-anim-in { opacity: 1; }
+.section-anim.section-anim-in > *:first-child { transform: translate3d(0, 0, 0); transition: transform 0.6s ease-out; }
+.section-anim.section-anim-out { opacity: 0; }
+.section-anim.section-anim-out > *:first-child { transition: transform 0.4s ease-out; }
+
+/* Specific animations */
+.tours-carousel-wrapper.section-anim > .tours-carousel { transform: translate3d(0, 24px, 0); }
+.tours-carousel-wrapper.section-anim.section-anim-in > .tours-carousel { transform: translate3d(0, 0, 0); transition: transform 0.6s ease-out; }
+
+.about-media.section-anim > .about-figure { transform: translate3d(24px, 0, 0); }
+.about-media.section-anim.section-anim-in > .about-figure { transform: translate3d(0, 0, 0); transition: transform 0.6s ease-out; }
+
+.about-content.section-anim > .about-text { transform: translate3d(-24px, 0, 0); }
+.about-content.section-anim.section-anim-in > .about-text { transform: translate3d(0, 0, 0); transition: transform 0.6s ease-out; }
+
+.contacts-left.section-anim > .contacts-card, .contacts-left.section-anim > .contacts-map-wrapper { transform: translate3d(24px, 0, 0); }
+.contacts-left.section-anim.section-anim-in > .contacts-card, .contacts-left.section-anim.section-anim-in > .contacts-map-wrapper { transform: translate3d(0, 0, 0); transition: transform 0.6s ease-out; }
+
+.contacts-form-wrapper.section-anim > .contact-form { transform: translate3d(-24px, 0, 0); }
+.contacts-form-wrapper.section-anim.section-anim-in > .contact-form { transform: translate3d(0, 0, 0); transition: transform 0.6s ease-out; }
+
+
+/* Preloader -------------------------------------------------------- */
+#preloader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: radial-gradient(circle at top, #141b25 0%, #05070b 55%, #000000 100%);
+    display: flex; align-items: center; justify-content: center;
+}
+.preloader-inner { text-align: center; }
+.preloader-logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.preloader-logo .logo-icon { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, #ffe9da 0, #ff4b2b 40%, #e6351a 100%); }
+.preloader-logo .logo-text { font-size: 14px; text-transform: uppercase; color: var(--color-text-muted); }
+.spinner { width: 38px; height: 38px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.14); border-top-color: var(--color-accent); animation: spin 0.9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Header ----------------------------------------------------------- */
+.header {
+    position: fixed; top: 0; left: 0; right: 0; height: var(--header-height); z-index: 1000;
+    display: flex; align-items: center;
+    background: transparent; border-bottom: 1px solid transparent;
+    transition: background-color var(--transition-slow), border-bottom var(--transition-slow), transform 0.6s ease-out, opacity 0.6s ease-out;
+    opacity: 0; transform: translateY(-30px);
+}
+.header.header-enter { opacity: 1; transform: translateY(0); }
+.header.scrolled {
+    backdrop-filter: blur(16px);
+    background: linear-gradient(to bottom, rgba(5, 7, 11, 0.8), rgba(5, 7, 11, 0.7));
+    border-bottom: 1px solid var(--color-border-header);
+}
+
+.header-inner {
+    position: relative; display: flex; align-items: center; justify-content: space-between; width: 100%;
+    padding: 10px 20px; border-radius: var(--radius-card); border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(5, 7, 11, 0.18); backdrop-filter: blur(10px);
+}
+.header.scrolled .header-inner { padding: 0; border-radius: 0; border: none; background: transparent; backdrop-filter: none; }
+
+/* Logo */
+.logo { display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.22em; 
+    color: var(--color-text-main); /* FIX: Было dark, стало main */
+}
+.logo-mark { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, #ffe9da 0, #ff4b2b 45%, #e6351a 100%); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18); }
+.header.scrolled .logo { color: var(--color-text-main); }
+
+/* Nav */
+.nav { position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-list { display: flex; gap: 32px; list-style: none; padding: 0; margin: 0; }
+
+.nav-link { 
+    font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; 
+    color: var(--color-text-main); /* FIX: Было dark, стало main */
+    font-weight: 600; transition: 0.2s; 
+}
+
+/* Наведение: всегда яркий */
+.nav-link:hover { color: var(--color-accent) !important; }
+
+/* Активный пункт: тускло-оранжевый */
+.nav-link.active { color: var(--color-accent-soft) !important; }
+
+/* Если наводим на активный - оставляем его тусклым (как просил) */
+.nav-link.active:hover { color: var(--color-accent-soft) !important; }
+
+
+/* Цвета при прокрученной шапке */
+.header.scrolled .nav-link { color: var(--color-text-main); }
+.header.scrolled .nav-link:hover { color: var(--color-accent) !important; }
+.header.scrolled .nav-link.active { color: var(--color-accent-soft) !important; }
+.header.scrolled .nav-link.active:hover { color: var(--color-accent-soft) !important; }
+
+/* Header Right */
+.header-right { display: flex; gap: 18px; align-items: center; }
+.btn-phone {
+    display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px;
+    border-radius: var(--radius-pill); border: 1px solid rgba(255, 255, 255, 0.22); background: rgba(0, 0, 0, 0.1);
+    font-size: 12px; font-weight: 600; text-transform: uppercase; 
+    color: var(--color-text-main); /* FIX: Было dark, стало main */
+    transition: 0.3s ease;
+}
+/* Hover: Заливка оранжевым */
+.btn-phone:hover { 
+    border-color: var(--color-accent); 
+    background: var(--color-accent); 
+    color: #fff !important; 
+}
+
+.header.scrolled .btn-phone { background: rgba(0, 0, 0, 0.26); border-color: var(--color-accent); color: var(--color-accent); }
+.header.scrolled .btn-phone:hover { background: var(--color-accent); color: #fff; }
+
+.header-socials { display: flex; gap: 10px; }
+.mobile-socials { display: none; }
+.social-link { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+    color: var(--color-text-main); /* FIX: Было dark, стало main */
+    transition: 0.2s; 
+}
+.social-link:hover { color: var(--color-text-main); background: var(--color-accent-bg); }
+.header.scrolled .social-link { color: var(--color-text-main); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; width: 24px; height: 22px; padding: 0; border: none; background: transparent; justify-content: center;}
+.hamburger span { height: 2px; width: 100%; border-radius: 999px; background: #ffffff; transition: 0.2s; }
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Hero ------------------------------------------------------------- */
+.hero { 
+    position: relative; 
+    min-height: 100vh; 
+    color: #ffffff; 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    /* ГЛАВНОЕ: Прижимаем всё содержимое к низу экрана */
+    justify-content: flex-end; 
+}
+
+.hero-bg { 
+    position: absolute; 
+    inset: 0; 
+    background-image: url("../img/hero-elbrus.jpg"); 
+    background-size: cover; 
+    background-position: top center; 
+    transform: scale(1.03); 
+    z-index: -2; 
+}
+
+.hero-overlay-gradient { 
+    position: absolute; 
+    inset: 0; 
+    background: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(2, 4, 11, 0) 55%, rgba(2, 4, 11, 0.6) 85%, var(--color-bg-main) 100%); 
+    z-index: -1; 
+}
+
+.hero-inner { 
+    position: relative; 
+    z-index: 1; 
+    height: 100%;
+    width: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    /* Контент внутри тоже прижимаем к низу */
+    justify-content: flex-end; 
+    
+    padding-top: calc(var(--header-height) + 20px); 
+    
+    /* ОТСТУП СНИЗУ (для Карточек):
+       Это пространство резервирует место под:
+       1. "Листайте вниз" + полоска (~50px)
+       2. Отступ X (6vh) между "Листайте вниз" и низом экрана
+       3. Отступ X (6vh) между Карточками и "Листайте вниз"
+       Итого: 6vh + 6vh + высота элемента ≈ 16vh-18vh. 
+       Ставим 17vh, чтобы попасть в твой ритм. */
+    padding-bottom: 15vh; 
+}
+
+.hero-content { 
+    /* Центрируем блок с текстом по горизонтали */
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    
+    /* Отступы сбрасываем, всем рулят Карточки снизу */
+    margin-bottom: 0; 
+}
+
+.hero-title { 
+    margin: 0 0 24px; 
+    text-transform: uppercase; 
+    letter-spacing: 0.14em; 
+    font-weight: 700; 
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.2); 
+}
+
+.hero-title-line { display: block; line-height: 1; }
+.hero-title-line-1 { font-size: clamp(48px, 6vw, 85px); }
+.hero-title-line-2 { font-size: clamp(44px, 5.4vw, 70px); display: flex; white-space: nowrap; }
+.hero-title-na { display: inline-flex; justify-content: center; align-items: center; width: 1em; font-size: 18px; letter-spacing: 0.24em; transform: rotate(-90deg); margin-left: 30px; margin-right: 10px; }
+.hero-subtitle { margin: 0; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-muted); }
+.hero-sub-2 { margin-left: 10px; }
+
+.hero-advantages { 
+    display: flex; 
+    gap: 20px; 
+    max-width: 920px; 
+    width: 100%;
+    
+    /* Центруем по горизонтали */
+    margin-left: auto; 
+    margin-right: auto;
+    
+    /* ОТСТУП СВЕРХУ (gap X):
+       Это расстояние между Заголовком и Карточками.
+       Равно 6vh (такому же X, как внизу). */
+    margin-top: 5vh; 
+    
+    justify-content: center; 
+}
+
+.adv-card { flex: 1; border-radius: var(--radius-card); padding: 16px 14px 14px; display: flex; flex-direction: column; align-items: flex-start; background: linear-gradient(to bottom, rgba(5, 7, 10, 0.8) 0%, rgba(5, 7, 10, 0) 100%); box-shadow: 0 -5px 10px rgba(0,0,0,0.2); transition: 0.2s; }
+.adv-icon { width: 30px; height: 30px; border-radius: 9px; background: rgba(0, 0, 0, 0.55); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+.adv-icon i { color: var(--color-accent); font-size: 15px; }
+.adv-text { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
+.adv-line { width: 100%; height: 2px; border-radius: 999px; background: rgba(255, 255, 255, 0.22); margin-top: auto; }
+.adv-card:hover .adv-line { background: var(--color-accent); }
+
+.hero-scroll-hint { 
+    position: absolute; 
+    /* ОТСТУП СНИЗУ (первый X):
+       Расстояние от низа экрана до начала блока подсказки. */
+    bottom: 2vh; 
+    
+    left: 50%; 
+    transform: translateX(-50%); 
+    text-align: center; 
+    font-size: 11px; 
+    text-transform: uppercase; 
+    color: rgba(255, 255, 255, 0.6); 
+}
+.hero-scroll-hint .scroll-line { display: block; width: 1px; height: 32px; margin: 10px auto 0; background: linear-gradient(to bottom, rgba(255,255,255,0.55), rgba(255,255,255,0)); }
+
+/* Common Sections -------------------------------------------------- */
+.section { padding: 80px 0; }
+.section-dark { background: none; }
+.section-header { text-align: center; margin-bottom: 30px; }
+.section-kicker { margin: 0 0 8px; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-soft); }
+.section-title { margin: 0; font-size: 28px; letter-spacing: 0.12em; text-transform: uppercase; }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: var(--radius-pill); border: 1px solid transparent; font-size: 12px; text-transform: uppercase; transition: 0.2s; }
+.btn-primary { background: var(--color-accent); border-color: var(--color-accent); color: #fff; box-shadow: 0 10px 30px rgba(255, 75, 43, 0.45); }
+.btn-primary:hover { background: #ff3110; border-color: #ff3110; }
+.btn-outline { border-color: rgba(255, 255, 255, 0.35); color: #fff; background: transparent; }
+.btn-outline:hover { 
+    border-color: var(--color-accent); 
+    background: var(--color-accent); /* Заливаем фон */
+    color: #fff;
+}
+
+/* Tours ------------------------------------------------------------ */
+.section-tours { 
+    background: transparent !important; 
+    position: relative;
+    padding-top: calc(var(--header-height) + 20px); 
+}
+
+.tours-carousel { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 1fr); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0; scrollbar-width: none; }
+.tours-carousel::-webkit-scrollbar { display: none; }
+.tour-card { scroll-snap-align: start; background: var(--color-bg-card); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-soft); border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; transition: 0.2s; }
+.tour-img { position: relative; padding-top: 62%; overflow: hidden; }
+.tour-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+.tour-card:hover .tour-img img { transform: scale(1.08); }
+.tour-body { padding: 16px 16px 14px; display: flex; flex-direction: column; flex: 1; }
+.tour-title { font-size: 16px; margin: 0 0 8px; }
+.tour-desc { margin: 0 0 16px; font-size: 13px; color: var(--color-text-muted); }
+.tour-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tour-price { font-weight: 600; font-size: 14px; }
+
+/* ================================================================= */
+/* СТРЕЛКИ (ФИНАЛ: ТОНКИЕ, СПЛОШНЫЕ, МИНИМАЛИЗМ) */
+/* ================================================================= */
+
+.carousel-controls {
+    position: relative;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    display: flex;
+    justify-content: center;
+    gap: 40px; 
+    z-index: 5;
+    transform: none; left: auto; bottom: auto;
+}
+
+.carousel-arrow {
+    position: relative;
+    border: none;
+    background: transparent;
+    width: 80px;  /* Аккуратная длина */
+    height: 40px; /* Удобная зона клика */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    
+    /* В спокойном состоянии полупрозрачный белый */
+    color: rgba(255, 255, 255, 0.4); 
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+/* При наведении - яркий оранжевый */
+.carousel-arrow:hover {
+    color: var(--color-accent);
+    opacity: 1;
+}
+
+/* ЛИНИЯ (Тонкая, сплошная) */
+.carousel-arrow span {
+    display: block;
+    height: 1px; 
+    width: 100%;
+    background: currentColor; /* Заливка текущим цветом (без градиента) */
+}
+
+/* ГАЛОЧКА (Тонкая) */
+.carousel-arrow::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid currentColor;
+    border-right: 1px solid currentColor;
+    transition: border-color 0.3s ease;
+}
+
+/* --- ЛЕВАЯ СТРЕЛКА --- */
+.carousel-arrow.prev { justify-content: flex-start; }
+
+.carousel-arrow.prev::before {
+    left: 0;
+    transform: rotate(-135deg); 
+}
+
+/* --- ПРАВАЯ СТРЕЛКА --- */
+.carousel-arrow.next { justify-content: flex-end; }
+
+.carousel-arrow.next::before {
+    right: 0;
+    transform: rotate(45deg);
+}
+
+
+@media (min-width: 1024px) { .tours-carousel { grid-auto-columns: calc(25% - 15px); } }
+@media (max-width: 768px) { .tours-carousel { grid-auto-columns: 100%; } }
+
+.tours-more { text-align: center; }
+.inline-link { color: var(--color-accent); }
+
+/* About & Contacts ------------------------------------------------- */
+.about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: flex-start; }
+.about-figure { border-radius: 18px; overflow: hidden; max-height: 420px; margin: 0; }
+.about-text { font-size: 14px; color: var(--color-text-muted); line-height: 1.6; }
+
+/* Центрируем заголовок контактов и даем отступ (ИСПРАВЛЕНО) */
+.contacts-kicker { 
+    text-align: center; 
+    display: block; 
+    width: 100%; 
+    margin-bottom: 40px; /* Отступ от карточек */
+} 
+
+.contacts-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+
+/* Исправляем прилипание карты к контактам: даем отступ */
+.contacts-left { 
+    display: flex; flex-direction: column; 
+    gap: 24px; /* Отступ между блоком с телефоном и картой */
+} 
+
+.contacts-card, .contact-form { background: var(--color-bg-card); border-radius: var(--radius-card); padding: 20px; border: 1px solid var(--color-border-soft); }
+.contacts-list { list-style: none; padding: 0; font-size: 13px; }
+.contacts-list li { margin-bottom: 10px; }
+.contacts-label { display: inline-block; min-width: 110px; color: var(--color-text-soft); }
+
+.contacts-map-wrapper { 
+    border-radius: var(--radius-card); 
+    overflow: hidden; 
+    height: 265px; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    width: 100%; 
+}
+
+/* ФИКС КАРТЫ: Принудительно растягиваем iframe */
+.contacts-map-wrapper iframe {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+.form-row { display: flex; gap: 18px; margin-bottom: 14px; }
+.form-field { flex: 1; display: flex; flex-direction: column; gap: 5px; font-size: 13px; }
+.form-field input, .form-field textarea { border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: var(--color-bg-main); padding: 9px 10px; color: #fff; outline: none; }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--color-accent); background: var(--color-bg-main); }
+
+.footer { border-top: 1px solid rgba(255,255,255,0.08); background: var(--color-bg-card); padding: 18px 0; font-size: 12px; color: var(--color-text-muted); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; }
+.footer-links { display: flex; gap: 20px; }
+
+#backToTop { position: fixed; right: 22px; bottom: 24px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.28); background: rgba(124,127,131,0.3); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.2s; z-index: 900; }
+#backToTop.visible { opacity: 1; pointer-events: auto; }
+#backToTop:hover { background: var(--color-accent); }
+
+/* Hero Entrance Animations */
+.hero-title-line, .hero-subtitle, .hero-advantages .adv-card { opacity: 0; transform: translateY(30px); }
+.hero-title-line-1.hero-anim-in { opacity: 1; transform: translateY(0); transition: 0.55s ease-out; }
+.hero-title-line-2.hero-anim-in { opacity: 1; transform: translateY(0); transition: 0.55s ease-out 0.12s; }
+.hero-title-na.hero-anim-in { opacity: 1; transform: rotate(-90deg); transition: 0.45s ease-out 0.22s; }
+.hero-subtitle.hero-anim-in { opacity: 1; transform: translateY(0); transition: 0.55s ease-out 0.34s; }
+.hero-advantages.hero-anim-in .adv-card { opacity: 1; transform: translateY(0); transition: 0.5s ease-out; }
+.hero-advantages.hero-anim-in .adv-card:nth-child(1) { transition-delay: 0.42s; }
+.hero-advantages.hero-anim-in .adv-card:nth-child(2) { transition-delay: 0.48s; }
+.hero-advantages.hero-anim-in .adv-card:nth-child(3) { transition-delay: 0.54s; }
+.hero-advantages.hero-anim-in .adv-card:nth-child(4) { transition-delay: 0.6s; }
+
+
+/* ================================================================= */
+/* АДАПТИВ (DESKTOP) - Растягиваем секции и центрируем */
+/* ================================================================= */
+@media (min-width: 1024px) {
+    .section-tours, .section-about, .section-contacts {
+        min-height: 100vh;
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; /* Центруем контент по вертикали */
+        
+        /* Добавляем отступ сверху, чтобы шапка не перекрывала */
+        padding-top: calc(var(--header-height) + 40px);
+        padding-bottom: 60px;
+    }
+}
+
+/* ================================================================= */
+/* АДАПТИВ (MOBILE & TABLET) */
+/* ================================================================= */
+@media (max-width: 1023px) {
+    
+    /* --- ШАПКА --- */
+    .header { padding: 0 10px; }
+    
+    .header-inner { 
+        padding: 8px 10px !important; 
+        justify-content: space-between !important; 
+        display: flex; 
+        align-items: center;
+    }
+    
+    .header-right { 
+        margin-left: auto; 
+        gap: 0; 
+        display: flex; 
+        align-items: center; 
+    }
+    
+    .logo {
+        font-size: 10px;
+        line-height: 1.2;
+        gap: 8px;
+    }
+    
+    .btn-phone { padding: 6px 12px; font-size: 11px; white-space: nowrap; }
+
+    /* ПРЯЧЕМ ДЕСКТОПНУЮ ВЕРСИЮ ИКОНОК НА МОБИЛЬНЫХ */
+    .desktop-socials { display: none !important; }
+    
+    .hamburger { 
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 24px;
+        height: 22px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        justify-content: center;
+        margin-left: 16px !important;
+    }
+
+    /* --- МОБИЛЬНОЕ МЕНЮ --- */
+    .nav { 
+        position: fixed; 
+        top: var(--header-height); 
+        left: 10px;
+        right: 10px;
+        background: rgba(5,7,11,0.95); 
+        backdrop-filter: blur(15px); 
+        padding: 0;
+        transform: translateY(-20px);
+        opacity: 0; 
+        pointer-events: none;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    }
+    
+    .nav.open { 
+        transform: translateY(0); 
+        opacity: 1; 
+        pointer-events: auto; 
+    }
+
+    .header:not(.scrolled) .nav.open {
+        /* 1. Позиционируем четко под шапкой с небольшим зазором */
+        top: calc(var(--header-height) - 15px);
+        background: rgba(21, 27, 37, 0.9);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: var(--radius-card);
+    }
+
+        /* СТИЛИ МЕНЮ ПРИ СКРОЛЛЕ (НОВОЕ) */
+    .header.scrolled .nav.open {
+        left: 0; /* Растягиваем на всю ширину */
+        right: 0; /* Растягиваем на всю ширину */
+        border-radius: 0; /* Убираем скругление углов */
+        border: none; /* Убираем боковые и верхнюю рамки */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Оставляем только нижнюю линию */
+    }
+
+
+    .nav-list { 
+        flex-direction: column; 
+        padding: 20px 0; 
+        gap: 20px; 
+        align-items: center;
+    }
+    
+    /* ПОКАЗЫВАЕМ И СТИЛИЗУЕМ МОБИЛЬНУЮ ВЕРСИЮ ИКОНОК */
+    .mobile-socials {
+        display: flex !important; /* ВАЖНО: Делаем их видимыми */
+        justify-content: center;
+        padding: 15px 0;
+        margin: 0 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        gap: 30px; /* <<< ДОБАВИТЬ ЭТУ СТРОКУ */
+    }
+    
+    /* --- ОСТАЛЬНЫЕ СТИЛИ (ОСТАЮТСЯ КАК БЫЛИ) --- */
+    .hero { min-height: 100vh; height: auto !important; min-height: 100dvh; display: block; }
+    .hero-bg { background-attachment: scroll !important; background-position: 50% 35% !important; }
+
+    .hero-content {
+        /* padding-left: 20px !important; padding-right: 20px !important; */ width: 100% !important; box-sizing: border-box;
+        text-align: center; margin-top: 23vh;
+    }
+    .hero-title-line-2 { display: flex; flex-wrap: wrap; justify-content: center; margin-left: -10px; }
+    .hero-title-na { margin-top: 5px; font-size: 14px; margin-right: 15px; }
+    .hero-title-rest { text-align: left; white-space: normal !important; max-width: 7em; display: block; }
+    .hero-title-line-1 { font-size: 36px; }
+    .hero-title-line-2 { font-size: 32px; }
+    .hero-subtitle { text-align: center; flex-direction: column; padding: 0 20px; display: flex; }
+    .hero-sub-2 { margin-left: 0; }
+    .hero-advantages { justify-content: center; gap: 10px; }
+    
+    .adv-card { position: relative; overflow: visible; padding: 10px 8px; align-items: center; }
+    .adv-text { display: block !important; position: absolute; top: 115%; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(17,22,30,0.95); padding: 8px 12px; border-radius: 8px; font-size: 11px; white-space: nowrap; opacity: 0; visibility: hidden; transition: 0.3s; border: 1px solid rgba(255,255,255,0.15); z-index: 10; pointer-events: none; }
+    .adv-card:active .adv-text { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .adv-text::before { content: ""; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); border-width: 0 5px 5px 5px; border-style: solid; border-color: transparent transparent rgba(17,22,30,0.95) transparent; }
+
+    .section { padding: 60px 0 !important; height: auto !important; min-height: 100vh; display: block; scroll-margin-top: 80px; }
+
+    .section-tours { margin-top: 0 !important; background: var(--color-bg-main) !important; padding-top: 80px !important; z-index: 2; position: relative; }
+    .about-inner, .contacts-inner { display: flex; flex-direction: column; }
+    .about-media, .about-content, .contacts-map-wrapper, .contacts-form-wrapper { width: 100%; max-width: 100%; }
+    .contacts-inner { gap: 30px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 15px; }
+
+    .carousel-controls { position: relative; margin-top: 30px; justify-content: center; gap: 15px; z-index: 5; }
+    .carousel-arrow { width: 80px; height: 36px; border: 1px solid rgba(255,255,255,0.25); border-radius: 50px; background: rgba(255,255,255,0.05); opacity: 1; justify-content: center; color: #fff; }
+    .carousel-arrow::before { display: none; }
+    .carousel-arrow span { width: 24px; background: #fff !important; height: 1px; display: block; position: relative; }
+    .carousel-arrow span::before, .carousel-arrow span::after { content: ""; position: absolute; width: 8px; height: 1px; background: #fff; display: block; }
+    .carousel-arrow.prev span::before { left: 0; top: -3px; transform: rotate(-45deg); transform-origin: left center; border:none; }
+    .carousel-arrow.prev span::after { left: 0; bottom: -3px; transform: rotate(45deg); transform-origin: left center; }
+    .carousel-arrow.next span::before { right: 0; top: -3px; transform: rotate(45deg); transform-origin: right center; border:none; }
+    .carousel-arrow.next span::after { right: 0; bottom: -3px; transform: rotate(-45deg); transform-origin: right center; }
+    .carousel-arrow:active { background: var(--color-accent); border-color: var(--color-accent); }
+}
+
+@media (max-width: 450px) {
+    .hero-content { padding-left: 20px !important; padding-right: 20px !important; }
+}
+
