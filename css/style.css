@@ -645,14 +645,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         justify-content: center; /* <<< Возвращаем центрирование */
     }
 
-    /* Ограничиваем высоту контента ВНУТРИ этих секций */
-    .section-tours .container,
-    .section-about .container {
-        max-height: 85vh; /* <<< ГЛАВНЫЙ ФИКС: контент не может быть выше 85% экрана */
-        overflow-y: auto;  /* Добавляем скролл, если контент вдруг не влезет */
-        padding-top: 20px; /* Небольшие внутренние отступы для красоты */
-        padding-bottom: 20px;
-    }
+
 
     /* Отдельное правило для Контактов, чтобы до футера можно было доскроллить */
     .section-contacts {
