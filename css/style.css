@@ -633,18 +633,79 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     .hero-title-line-2 { display: flex; flex-wrap: wrap; justify-content: center; margin-left: -10px; }
 
     /* ========================================================================= */
-    /* --- РЕШЕНИЕ "ЗДРАВЫЙ СМЫСЛ" ДЛЯ СЕКЦИЙ --- */
+    /* --- РЕШЕНИЕ "ЗДРАВЫЙ СМЫСЛ" + РЕЗИНОВАЯ КАРТИНКА (О НАС) --- */
     /* ========================================================================= */
     
-    /* Правила для секций, которые должны быть полноэкранными */
+    /* 1. Общее правило: обе секции занимают весь экран */
     .section-tours,
     .section-about {
         height: 100dvh;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* <<< Возвращаем центрирование */
+        justify-content: center;
+        overflow: hidden; /* Важно, чтобы ничего не торчало */
     }
 
+    /* 2. СПЕЦИАЛЬНАЯ МАГИЯ ДЛЯ СЕКЦИИ "О НАС" (чтобы все влезало) */
+    
+    /* Делаем контейнер внутри "О нас" на всю высоту */
+    .section-about .container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding-top: calc(var(--header-height) + 1vh); /* Отступ сверху */
+        padding-bottom: 2vh; /* Отступ снизу */
+    }
+
+    /* Обертка контента растягивается и управляет детьми */
+    .about-inner {
+        flex: 1;          /* Занимаем все доступное место */
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* Обрезаем лишнее */
+        gap: 2vh;         /* Отступ между картинкой и текстом */
+    }
+
+    /* Заголовок не сжимаем */
+    .section-about .section-header {
+        flex-shrink: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* КАРТИНКА - ГЛАВНЫЙ РЕЗИНОВЫЙ ЭЛЕМЕНТ */
+    .about-media {
+        flex: 1;       /* Займи ВСЁ свободное место, которое осталось */
+        min-height: 0; /* РАЗРЕШАЕМ сжиматься, если места мало */
+        width: 100%;
+        border-radius: var(--radius-card);
+        overflow: hidden;
+    }
+
+    .about-figure {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .about-figure img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Картинка заполнит блок, сохраняя пропорции */
+    }
+
+    /* Текст не сжимаем слишком сильно */
+    .about-content {
+        flex-shrink: 0;
+        max-height: 45%; /* Текст не займет больше 45% экрана */
+        overflow-y: auto; /* Если текста ну очень много - появится скролл внутри текста */
+    }
+    
+    /* Чуть уменьшаем шрифт для компактности на ноутбуках */
+    .about-text {
+        font-size: clamp(12px, 1.8vh, 14px);
+        margin: 0;
+    }
 
 
     /* Отдельное правило для Контактов, чтобы до футера можно было доскроллить */
