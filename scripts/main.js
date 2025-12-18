@@ -172,26 +172,6 @@ function initHeroObserver() {
     observerHero.observe(hero);
 }
 
-// Tours Carousel
-const toursCarousel = document.getElementById("toursCarousel");
-const toursPrev = document.getElementById("toursPrev");
-const toursNext = document.getElementById("toursNext");
-if (toursCarousel && toursPrev && toursNext) {
-    const scrollStep = () => {
-        const card = toursCarousel.querySelector(".tour-card");
-        if (!card) return 300;
-        const style = window.getComputedStyle(toursCarousel);
-        const gap = parseInt(style.columnGap || style.gap || "20", 10);
-        return card.getBoundingClientRect().width + gap;
-    };
-    toursPrev.addEventListener("click", () => {
-        toursCarousel.scrollBy({ left: -scrollStep(), behavior: "smooth" });
-    });
-    toursNext.addEventListener("click", () => {
-        toursCarousel.scrollBy({ left: scrollStep(), behavior: "smooth" });
-    });
-}
-
 // Active Nav Link
 function initActiveNavLink() {
     const navLinks = document.querySelectorAll(".nav-link");
@@ -240,7 +220,7 @@ function initActiveNavLink() {
     sections.forEach((sec) => observer.observe(sec));
 }
 
-// === DESKTOP SECTION SCROLL (Восстановленная плавность с фиксом подвала) ===
+// === DESKTOP SECTION SCROLL ===
 function initSectionScroll() {
     // Включаем только на десктопах!
     if (window.innerWidth < 1024) return;
@@ -325,4 +305,61 @@ document.addEventListener("DOMContentLoaded", () => {
     initSectionAnimations();
     initHeroObserver();
     initSectionScroll(); // Запускаем нашу JS функцию для десктопа
+
+    // ИНИЦИАЛИЗАЦИЯ SWIPER (Карусель туров)
+    const tourSwiper = new Swiper('.tours-swiper', {
+        // --- Базовые настройки (Мобильные устройства) ---
+        // 'auto' означает, что ширина берется из CSS (там у нас фиксированные пиксели или vw)
+        slidesPerView: 'auto', 
+        spaceBetween: 15,
+        grabCursor: true,
+        speed: 600,
+        
+        // --- Стрелки навигации ---
+        navigation: {
+            nextEl: '#toursNext',
+            prevEl: '#toursPrev',
+        },
+        
+        // --- Адаптивность (Breakpoints) ---
+        breakpoints: {
+            // >= 320px (Телефоны)
+            320: {
+                slidesPerView: 'auto', // Используем ширину из CSS
+                spaceBetween: 15,
+                centeredSlides: false,
+            },
+
+            // >= 768px (Планшеты)
+            768: {
+                slidesPerView: 'auto', // Используем ширину из CSS
+                spaceBetween: 20,
+                centeredSlides: false, 
+            },
+
+            // >= 1200px (Ноутбуки и Десктопы)
+            // Здесь переключаемся на ФИКСИРОВАННОЕ КОЛИЧЕСТВО.
+            // Swiper сам растянет карточки так, чтобы влезло ровно 3.
+            1200: {
+                slidesPerView: 3, 
+                spaceBetween: 30,
+                centeredSlides: false, 
+            },
+
+            // >= 1600px (Широкие экраны)
+            // Показываем 4 карточки, чтобы они не были слишком широкими
+            1600: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+            },
+
+            // >= 2000px (Сверхширокие экраны или масштаб 25%)
+            // Показываем 5 карточек
+            2000: {
+                slidesPerView: 5,
+                spaceBetween: 40,
+            }
+        }
+    });
+
 });

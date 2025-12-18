@@ -60,9 +60,9 @@
 
     /* --- РЕЗИНОВЫЕ РАЗМЕРЫ --- */
     --section-gap: clamp(40px, 8vw, 140px);
-    --font-h2: clamp(22px, 2.5vw, 70px);
+    --font-h2: clamp(22px, 2vw, 60px);
     --font-body: 1vw;
-    --font-card-title: clamp(1.3vw);
+    --font-card-title: 1.3vw;
     --font-subtitle: 0.8vw;
 }
 
@@ -285,12 +285,44 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .section-tours,
 .section-about,
 .section-contacts {
-    height: 100dvh; display: flex; flex-direction: column; justify-content: center;
-    padding-top: var(--header-height); padding-bottom: 2vh;
-    box-sizing: border-box; position: relative; background: var(--color-bg-main);
+    height: 100dvh; 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column;
+    box-sizing: border-box; 
+    position: relative; 
+    background: var(--color-bg-main);
+    overflow: hidden; /* Обрезаем лишнее, чтобы не было двойных скроллов */
 }
-.section-header { text-align: center; margin-bottom: 30px; }
-.section-kicker { margin: 0 0 8px; font-size: var(--font-subtitle); letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-soft); }
+
+/* ЭТО ГЛАВНОЕ ПРАВИЛО ЦЕНТРОВКИ ДЛЯ ВСЕХ СЕКЦИЙ */
+.section-tours .container,
+.section-about .container,
+.section-contacts .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    /* Центрируем всё содержимое по вертикали */
+    justify-content: center; 
+    
+    /* Отступ сверху равен высоте шапки, чтобы при центровке контент на неё не налезал */
+    padding-top: var(--header-height);
+    
+    /* Небольшой отступ снизу для баланса */
+    padding-bottom: 2vh;
+}
+
+.section-header { text-align: center; margin-bottom: 2vh; }
+/* Контейнер карусели */
+.tours-carousel-wrapper {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Если карточки всё еще не влезают, можно тут поставить flex-grow: 1 */
+}
+.section-kicker { margin: 0 0 0.3em; font-size: var(--font-subtitle); letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-soft); }
 .section-title { margin: 0; font-size: var(--font-h2); letter-spacing: 0.12em; text-transform: uppercase; }
 .btn { display: inline-flex; 
     align-items: center; justify-content: center; 
@@ -315,18 +347,43 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .btn-more:hover { background: var(--color-accent); color: #fff; box-shadow: 0 5px 15px rgba(255, 75, 43, 0.3); }
 
 
-/* Tours ------------------------------------------------------------ */
-.tours-carousel { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(max(240px, 22vw), 1fr);  gap: clamp(20px, 1.5vw, 60px); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 1vh; scrollbar-width: none; }
-.tours-carousel::-webkit-scrollbar { display: none; }
-.tour-card { scroll-snap-align: start; background: var(--color-bg-card); 
-    border-radius: var(--radius-card); overflow: hidden; 
+/* Tours Swiper (NEW) ----------------------------------------------- */
+.tours-swiper {
+    width: 100%;
+    /* Свайпер должен занимать высоту для показа слайдов */
+    height: auto;
+    padding-bottom: 20px; /* Место для тени */
+    overflow: hidden;
+}
+
+/* Слайд карточки */
+.swiper-slide.tour-card {
+    /* ЖЕСТКАЯ ШИРИНА КАРТОЧКИ: Решает проблему зума */
+    width: 320px;
+    
+    flex-shrink: 0;
+    height: auto; /* Тянется по контенту */
+    
+    /* Старые стили */
+    background: var(--color-bg-card); 
+    border-radius: var(--radius-card); 
+    overflow: hidden; 
     box-shadow: var(--shadow-soft-carousel); 
-    border: 1px solid rgba(255, 255, 255, 0.06); display: flex; flex-direction: column; 
-    transition: 0.2s; }
-.tour-img { position: relative; padding-top: 62%; overflow: hidden; }
+    border: 1px solid rgba(255, 255, 255, 0.06); 
+    display: flex; flex-direction: column; 
+    transition: 0.2s;
+}
+/* ДЕСКТОП: Сбрасываем ширину в auto, чтобы JS сам растянул как надо */
+@media (min-width: 1200px) {
+    .swiper-slide.tour-card {
+        width: auto; /* ВАЖНО! */
+    }
+}
+
+.tour-img { position: relative; padding-top: 55%; overflow: hidden; }
 .tour-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
 .tour-card:hover .tour-img img { transform: scale(1.08); }
-.tour-body { padding: 1.2em 1.2em 1em; display: flex; flex-direction: column; flex: 1; }
+.tour-body { padding: 1em; display: flex; flex-direction: column; flex: 1; }
 .tour-title { font-size: var(--font-card-title); margin: 0 0 0.5em; }
 .tour-desc { margin: 0 0 1em; font-size: var(--font-body); color: var(--color-text-muted); }
 .tour-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 1em; }
@@ -334,7 +391,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
 /* Стрелки */
 .carousel-controls {
-    position: relative; margin-top: 3vh; margin-bottom: 3vh;
+    position: relative; margin-top: 2vh; margin-bottom: 3vh;
     display: flex; justify-content: center; gap: 40px; z-index: 5;
     transform: none; left: auto; bottom: auto;
 }
@@ -351,7 +408,16 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .carousel-arrow.next { justify-content: flex-end; }
 .carousel-arrow.next::before { right: 0; transform: rotate(45deg); }
 
-@media (min-width: 1024px) { .tours-carousel { grid-auto-columns: calc(25% - 15px); } }
+/* Стили отключенной кнопки (Swiper) */
+.carousel-arrow.swiper-button-disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: default;
+}
+
+@media (min-width: 1024px) { 
+    /* Можно оставить пустым или настроить доп логику, но swiper справится сам */
+}
 .tours-more { text-align: center; }
 .inline-link { color: var(--color-accent); }
 
@@ -408,7 +474,13 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 /* ================================================================= */
 /* АДАПТИВ (TABLET & MOBILE) */
 /* ================================================================= */
+@media (max-width: 1400px) {
+     .swiper-slide.tour-card { width: 340px; }
+}
+
 @media (max-width: 1199.98px) {
+    
+    .swiper-slide.tour-card { width: 320px; }
 
     /* --- ШАПКА И МЕНЮ --- */
     .header { padding: 0 10px; }
@@ -447,6 +519,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         height: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: center; 
         padding-top: calc(var(--header-height) + 1vh);
         padding-bottom: 2vh;
     }
@@ -499,7 +572,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         .about-inner { flex-direction: column; }
         
         .section-about .section-header {
-            flex-shrink: 0; margin-bottom: 1.5vh; margin-top: 0;
+            flex-shrink: 0; margin-bottom: 1vh; margin-top: 1vh;
         }
 
         .about-media {
@@ -537,10 +610,8 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     /* --- ФОРМА И КАРУСЕЛЬ --- */
     .form-row { flex-direction: column; }
     .carousel-controls { gap: 20px; margin-top: 30px; }
-    .tours-carousel { grid-auto-columns: 100%; gap: 15px; }
-    @media (min-width: 768px) { .tours-carousel { grid-auto-columns: calc((100% - 20px) / 2); gap: 20px; } }
-    @media (min-width: 992px) { .tours-carousel { grid-auto-columns: calc((100% - 40px) / 3); } }
-
+    /* .tours-carousel { grid-auto-columns: 100%; gap: 15px; } */
+    
     /* --- ОБЩИЕ ПРАВИЛА --- */
     /* Здесь мы не трогаем about-inner, так как выше переопределили его специально */
     .contacts-inner { display: flex; flex-direction: column; }
@@ -550,6 +621,11 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
 } /* <<<< КОНЕЦ ОСНОВНОГО МЕДИА-ЗАПРОСА */
 
+
+@media (max-width: 768px) {
+    /* На мобиле карточка чуть уже экрана, чтобы было видно следующую */
+    .swiper-slide.tour-card { width: 85vw; }
+}
 
 @media (max-width: 450px) {
     .hero-content { padding-left: 20px !important; padding-right: 20px !important; }

@@ -145,18 +145,21 @@
     </div>
 </section>
 
-    <!-- TOURS SECTION -->
-    <section class="section section-tours" id="tours">
-        <div class="container">
-            <header class="section-header section-anim" data-anim-delay="0">
-                <p class="section-kicker">Мы подберём маршрут под любой уровень</p>
-                <h2 class="section-title">Популярные туры</h2>
-            </header>
+<!-- TOURS SECTION -->
+<section class="section section-tours" id="tours">
+    <div class="container">
+        <header class="section-header section-anim" data-anim-delay="0">
+            <p class="section-kicker">Мы подберём маршрут под любой уровень</p>
+            <h2 class="section-title">Популярные туры</h2>
+        </header>
 
-            <div class="tours-carousel-wrapper section-anim" data-anim-delay="120">
-                <div class="tours-carousel" id="toursCarousel">
-                    <!-- Cards 1-8 -->
-                    <article class="tour-card">
+        <div class="tours-carousel-wrapper section-anim" data-anim-delay="120">
+            
+            <!-- SWIPER CONTAINER -->
+            <div class="swiper tours-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Cards -->
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/elbrus-vosh.jpg" alt="Восхождение на Эльбрус" loading="lazy" />
                         </div>
@@ -169,7 +172,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/dagestan.jpg" alt="Дагестан каньоны и море" loading="lazy" />
                         </div>
@@ -182,7 +186,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/arhyz.jpg" alt="Трекинг по Архызу" loading="lazy" />
                         </div>
@@ -195,7 +200,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/yazik-trollolo.jpg" alt="Язык тролля - Безенги" loading="lazy" />
                         </div>
@@ -208,7 +214,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/dombay.jpg" alt="Домбай и Теберда" loading="lazy" />
                         </div>
@@ -221,7 +228,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/tower-ingush.jpg" alt="Ингушетия башни" loading="lazy" />
                         </div>
@@ -234,7 +242,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/ratrak-elbrus.jpg" alt="Сноуборд в горах" loading="lazy" />
                         </div>
@@ -247,7 +256,8 @@
                             </div>
                         </div>
                     </article>
-                    <article class="tour-card">
+
+                    <article class="swiper-slide tour-card">
                         <div class="tour-img">
                             <img src="./img/jeep-tour.jpg" alt="Джип туры по Кавказу" loading="lazy" />
                         </div>
@@ -261,25 +271,27 @@
                         </div>
                     </article>
                 </div>
-
-                <div class="carousel-controls">
-                    <button class="carousel-arrow prev" id="toursPrev" aria-label="Предыдущие туры">
-                        <span></span>
-                    </button>
-                    <button class="carousel-arrow next" id="toursNext" aria-label="Следующие туры">
-                        <span></span>
-                    </button>
-                </div>
             </div>
-            
-            <div class="tours-more section-anim" data-anim-delay="240">
-                <p class="section-kicker">
-                    Хотите подобрать индивидуальную программу, или посмотреть все доступные маршруты? Жмите скорее 
-                    <a href="#all-tours" class="inline-link">сюда</a>
-                </p>
+
+            <!-- Controls -->
+            <div class="carousel-controls">
+                <button class="carousel-arrow prev" id="toursPrev" aria-label="Предыдущие туры">
+                    <span></span>
+                </button>
+                <button class="carousel-arrow next" id="toursNext" aria-label="Следующие туры">
+                    <span></span>
+                </button>
             </div>
         </div>
-    </section>
+        
+        <div class="tours-more section-anim" data-anim-delay="240">
+            <p class="section-kicker">
+                Хотите подобрать индивидуальную программу, или посмотреть все доступные маршруты? Жмите скорее 
+                <a href="#all-tours" class="inline-link">сюда</a>
+            </p>
+        </div>
+    </div>
+</section>
 
     <!-- ABOUT SECTION -->
     <section class="section section-about" id="about">
