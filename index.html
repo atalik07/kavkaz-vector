@@ -7,11 +7,12 @@
     <meta name="description" content="Туры и экспедиции по Северному Кавказу: Эльбрус, Дагестан, Чечня, Ингушетия и другие направления." />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="./img/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./img/logo.svg" />
 
     <!-- Icons -->
     <link rel="stylesheet" href="./css/all.min.css" />
-
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
     <!-- Main styles -->
     <link rel="stylesheet" href="./css/style.css" />
 </head>
@@ -21,7 +22,7 @@
 <div id="preloader">
     <div class="preloader-inner">
         <div class="preloader-logo">
-            <span class="logo-icon"></span>
+              <img src="./img/logo.svg" alt="Logo" class="logo-mark"> 
             <span class="logo-text">Кавказский<br>вектор</span>
         </div>
         <div class="spinner"></div>
@@ -37,7 +38,7 @@
 <header class="header" id="top">
     <div class="container header-inner">
         <a href="#hero" class="logo" aria-label="Кавказский вектор — на главную">
-            <span class="logo-mark"></span>
+            <img src="img/logo.svg" alt="Logo" class="logo-mark">
             <span class="logo-title">Кавказский<br>вектор</span>
         </a>
 
@@ -289,22 +290,30 @@
             </header>
 
             <div class="about-inner">
+                <!-- Картинка -->
                 <div class="about-media section-anim" data-anim-delay="120" data-anim-direction="left">
                     <figure class="about-figure">
                         <img src="./img/about-jeep.jpg" alt="Внедорожник на фоне гор" />
                     </figure>
                 </div>
 
+                <!-- Контент (Текст + Кнопка) -->
                 <div class="about-content section-anim" data-anim-delay="220" data-anim-direction="right">
-                    <div class="about-text">
-                        <p>«Кавказский вектор» — команда гидов, инструкторов и логистов, которые более 10 лет водят группы по самым красивым уголкам Северного Кавказа. Мы работаем с небольшими группами до 8 человек, уделяя максимум внимания безопасности и комфорту каждого участника.</p>
-                        <p>В нашей коллекции — как мягкие путешествия для первого знакомства с горами, так и технически сложные восхождения. Мы тщательно проверяем экипировку, сотрудничаем с сертифицированными спасательными службами и продумываем маршруты так, чтобы вы могли наслаждаться горами, не думая о логистике.</p>
-                        <p>Каждый тур — это продуманный баланс активности и отдыха, местной кухни и атмосферных вечеров у костра. Присоединяйтесь, чтобы почувствовать настоящий вектор Кавказа.</p>
+                    
+                    <!-- Обертка для текста (именно к ней мы применим line-clamp в CSS) -->
+                    <div class="about-text-wrapper">
+                        <p class="about-text">«Кавказский вектор» — команда гидов, инструкторов и логистов, которые более 10 лет водят группы по самым красивым уголкам Северного Кавказа. Мы работаем с небольшими группами до 8 человек, уделяя максимум внимания безопасности и комфорту каждого участника.</p>
+                        <p class="about-text">В нашей коллекции — как мягкие путешествия для первого знакомства с горами, так и технически сложные восхождения. Мы тщательно проверяем экипировку, сотрудничаем с сертифицированными спасательными службами и продумываем маршруты так, чтобы вы могли наслаждаться горами, не думая о логистике.</p>
+                        <p class="about-text">Каждый тур — это продуманный баланс активности и отдыха, местной кухни и атмосферных вечеров у костра. Присоединяйтесь, чтобы почувствовать настоящий вектор Кавказа.</p>
                     </div>
+
+                    <!-- Кнопка (заглушка) -->
+                    <a href="#" class="btn-more">Читать далее</a>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- CONTACTS SECTION -->
     <section class="section section-contacts" id="contacts">
@@ -375,6 +384,7 @@
 </footer>
 
 <!-- JS -->
+<script src="scripts/swiper-bundle.min.js"></script>
 <script src="scripts/main.js"></script>
 </body>
 </html>
