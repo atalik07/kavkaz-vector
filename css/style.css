@@ -328,7 +328,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     align-items: center; justify-content: center; 
      padding: 0.8em 1.6em; border-radius: var(--radius-pill); 
     border: 1px solid transparent; font-size: clamp(12px, 0.8vw, 24px);
-    text-transform: uppercase; transition: 0.2s; }
+    text-transform: uppercase; transition: 0.2s;min-height: 4em; flex-shrink: 0;}
 .btn-primary { background: var(--color-accent); border-color: var(--color-accent); color: #fff; box-shadow: 0 10px 30px rgba(255, 75, 43, 0.45); }
 .btn-primary:hover { background: #ff3110; border-color: #ff3110; }
 .btn-outline { border-color: rgba(255, 255, 255, 0.35); color: #fff; background: transparent; font-size: var(--font-body);}
@@ -423,30 +423,58 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
 /* About & Contacts (Global) ---------------------------------------- */
 .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: flex-start; }
-.about-figure { border-radius: var(--radius-card); overflow: hidden; max-height: 420px; margin: 0; }
+.about-figure { border-radius: var(--radius-card); overflow: hidden; max-height: 60vh; margin: 0; width: 100%; }
+.about-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .about-text { font-size: var(--font-body); color: var(--color-text-muted); line-height: 1.6; }
 
 .contacts-kicker { text-align: center; display: block; width: 100%; margin-bottom: 40px; } 
-.contacts-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
-.contacts-left { display: flex; flex-direction: column; gap: 24px; } 
+.contacts-inner { width: 100%; max-height: 80%; flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+.contacts-left { display: flex; flex-direction: column; gap: 24px; height: 100%; } 
 .contacts-card, .contact-form { 
     background: var(--color-bg-card); border-radius: var(--radius-card); padding: 20px; 
-     border: 1px solid var(--color-border-soft); display: flex; flex-direction: column; 
+     border: 1px solid var(--color-border-soft); display: flex; flex-direction: column;  flex-shrink: 0;
     }
-.contact-form { height: 100%; }    
+.contact-form { 
+    height: 100%; background: var(--color-bg-card); 
+    border-radius: var(--radius-card); 
+    padding: clamp(20px, 2vw, 40px);  
+    border: 1px solid var(--color-border-soft); 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+ }    
 .contacts-list { list-style: none; padding: 0; font-size: var(--font-body); }
 .contacts-list li { margin-bottom: 10px; }
 .contacts-label { display: inline-block; min-width: 110px; color: var(--color-text-soft); }
 
 .contacts-map-wrapper { 
-    border-radius: var(--radius-card); overflow: hidden; height: 265px; 
+    border-radius: var(--radius-card); overflow: hidden;
     border: 1px solid rgba(255,255,255,0.1); width: 100%; 
+    flex-grow: 1; /* Займи всё оставшееся место в колонке! */
+    min-height: 265px; /* Но не меньше этого значения */
 }
 .contacts-map-wrapper iframe { width: 100% !important; height: 100% !important; display: block; }
+/* Правая колонка (Форма) */
+.contacts-form-wrapper {    height: 100%; /* Тоже на всю высоту */}
 
-.form-row { display: flex; gap: 18px; margin-bottom: 14px; }
+.form-row { display: flex; gap: 15px; flex-shrink: 0; }
 .form-field { flex: 1; display: flex; flex-direction: column; gap: 5px; font-size: var(--font-body); }
-.form-field input, .form-field textarea { border-radius: var(--radius-input); border: 1px solid rgba(255,255,255,0.18); background: var(--color-bg-main); padding: 9px 10px; color: #fff; outline: none; resize:none; }
+.form-field input, .form-field textarea { 
+    border-radius: var(--radius-input); border: 1px solid rgba(255,255,255,0.18); 
+    background: var(--color-bg-main); padding: 0.5em 0.6em; color: #fff; outline: none; resize:none;
+        /* Добавляем минимальную высоту, чтобы они всегда были "нажимаемыми" */
+    min-height: 3em; 
+    
+    /* Гарантируем, что шрифт внутри поля тоже резиновый */
+    font-size: var(--font-body); 
+    
+    /* Важно: не даем полям сжиматься, если места мало */
+    flex-shrink: 0; 
+}
 .form-field textarea { flex-grow: 1; }
 .form-field input:focus, .form-field textarea:focus { border-color: var(--color-accent); background: var(--color-bg-main); }
 
