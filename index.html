@@ -66,10 +66,10 @@
         </nav>
 
         <div class="header-right">
-            <a href="tel:+78632100000" class="btn-phone">
-                <i class="fa-solid fa-phone"></i>
-                <span>+7 (863) 210‑00‑00</span>
-            </a>
+                <button class="btn" type="button" onclick="window.location.href='tel:+78632100000'">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+7 (863) 210‑00‑00</span>
+                </button>
              <div class="header-socials desktop-socials">
                 <a href="#" class="social-link" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
                 <a href="#" class="social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -168,7 +168,7 @@
                             <p class="tour-desc">Классический маршрут на западную вершину Эльбруса с опытными гидами и акклиматизацией.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 68 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -182,7 +182,7 @@
                             <p class="tour-desc">Сулакский каньон, горные аулы и тёплое Каспийское море в одном насыщенном туре.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 42 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -196,7 +196,7 @@
                             <p class="tour-desc">Голубые озёра, альпийские луга и ночёвки под звёздным небом в палатках или турприютах.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 36 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -210,7 +210,7 @@
                             <p class="tour-desc">Язык тролля - древняя каменная площадка, откуда открывается потрясающий вид.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 39 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -224,7 +224,7 @@
                             <p class="tour-desc">Комфортный отдых в горах Карачаево‑Черкесии с мягкими трекингами и канатными дорогами.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 33 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -238,7 +238,7 @@
                             <p class="tour-desc">Хайкинг по горным долинам, башни-вышки и нетронутая природа Джейрахского района.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 38 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -252,7 +252,7 @@
                             <p class="tour-desc">Катание на сноуборде или лыжах с гидом, лавинное снаряжение и безопасность включены.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 55 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -266,7 +266,7 @@
                             <p class="tour-desc">Маршрут на внедорожниках по перевалам и смотровым площадкам Северного Кавказа.</p>
                             <div class="tour-footer">
                                 <span class="tour-price">от 47 000 ₽</span>
-                                <button class="btn btn-outline">подробнее</button>
+                                <button class="btn">подробнее</button>
                             </div>
                         </div>
                     </article>
@@ -320,7 +320,7 @@
                     </div>
 
                     <!-- Кнопка (заглушка) -->
-                    <a href="#" class="btn-more">Читать далее</a>
+                    <button class="btn">Читать далее</button>
                 </div>
             </div>
         </div>
@@ -376,7 +376,10 @@
                                 <textarea id="message" name="message" rows="4" placeholder="Расскажите, какой тур вы ищете"></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                        <button type="submit" class="btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Отправить</span>
+                        </button> 
                         <p class="form-notice">Нажимая кнопку, вы соглашаетесь с <a href="#privacy" class="inline-link">политикой конфиденциальности</a> и <a href="#consent" class="inline-link">согласием на обработку персональных данных</a>.</p>
                     </form>
                 </div>
