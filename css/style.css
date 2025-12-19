@@ -569,7 +569,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
     /* --- ШАПКА И МЕНЮ --- */
     .header { padding: 0 10px; }
-    .header-inner { padding: 8px 10px !important; justify-content: space-between !important; display: flex; align-items: center; }
+    .header-inner { min-width: 94vw !important; padding: 8px 10px !important; justify-content: space-between !important; display: flex; align-items: center; }
     .header-right { margin-left: auto; gap: 0; display: flex; align-items: center; }
     .logo { font-size: 10px; line-height: 1.2; gap: 1vw; }
     .btn { padding: 6px 12px; font-size: 11px; white-space: nowrap; }
@@ -778,4 +778,169 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 
 @media (max-width: 450px) {
     .hero-content { padding-left: 20px !important; padding-right: 20px !important; }
+}
+
+/* ================================================================= */
+/* ФИНАЛЬНЫЙ ФИКС ДЛЯ МОБИЛЬНЫХ (ПОРТРЕТНЫЙ РЕЖИМ) */
+/* ================================================================= */
+@media (max-width: 767.98px) and (orientation: portrait) {
+
+    /* 2. РАСШИРЯЕМ КОНТЕЙНЕР HERO ДО 90% */
+    .hero-inner {
+        width: 90% !important;
+        max-width: 90% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        
+        /* Выравнивание контента */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Центрируем по вертикали */
+    }
+
+    /* 3. ЗАГОЛОВОК (В 3 строки, по левому краю) */
+    .hero-content {
+        width: 100% !important;
+        text-align: left !important; /* Выравнивание влево */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        
+        /* Отступ сверху, чтобы заголовок был визуально по центру свободной зоны */
+        margin-top: auto;
+        margin-bottom: 20px; 
+    }
+    
+    .hero-title-wrapper {
+        width: 100%;
+    }
+
+    .hero-title {
+        /* Размер шрифта чуть меньше, чтобы слова "НА СЕВЕРНОМ" влезли в строку */
+        font-size: clamp(32px, 9vw, 46px); 
+        line-height: 1.1;
+    }
+
+    .hero-title-line-2 {
+        display: block !important; /* Убираем flex, чтобы текст шел потоком */
+        text-align: left !important;
+        margin-left: 0 !important;
+    }
+
+
+
+    /* 4. БЛОК ПРЕИМУЩЕСТВ (На всю ширину 90%) */
+    .hero-advantages {
+        width: 100% !important;
+        margin-top: auto; /* Прижимаем к низу */
+        margin-bottom: 4vh; /* Отступ от самого низа экрана */
+        gap: 10px; /* Расстояние между карточками */
+    }
+    
+    .adv-card {
+        /* Карточка занимает половину минус зазор. 
+           Текст внутри будет переноситься, если не влезет. */
+        flex: 0 0 calc(50% - 5px) !important; 
+        width: auto !important;
+        padding: 12px 10px; /* Компактные отступы внутри */
+    }
+    
+    /* Уменьшаем шрифт в карточках, чтобы не вылезал */
+    .adv-text {
+        font-size: 10px !important;
+        white-space: normal; /* Разрешаем перенос текста */
+    }
+}
+/* ================================================================= */
+/* ВОЗВРАЩЕНИЕ ПОЭКРАННОГО СКРОЛЛА (NATIVE CSS SNAP) */
+/* ================================================================= */
+
+/* Включаем прилипание только для экранов меньше 1200px (мобильные/планшеты) */
+@media (max-width: 1199.98px) {
+    html {
+        /* Включаем строгое прилипание по вертикали */
+        scroll-snap-type: y mandatory; 
+        scroll-behavior: smooth;
+    }
+
+    /* Указываем, какие блоки должны прилипать */
+    .hero,
+    .section-tours,
+    .section-about,
+    .section-contacts {
+        /* Секция должна прилипать своим верхом к верху экрана */
+        scroll-snap-align: start; 
+        
+        /* Заставляет браузер обязательно остановиться на секции, не пролетая мимо */
+        scroll-snap-stop: always; 
+    }
+}
+
+/* ================================================================= */
+/* ЖЕСТКАЯ ФИКСАЦИЯ "НА" + "СЕВЕРНОМ" (ALL MOBILE/TABLET) */
+/* ================================================================= */
+@media (max-width: 1199.98px) {
+    
+    /* Контейнер строки: Строго ФЛЕКС, Строго БЕЗ ПЕРЕНОСА */
+    .hero-title-line-2 {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important; /* Запрещаем разрыв строки */
+        width: auto !important;
+    }
+
+    /* Частица "НА": Всегда повернута, всегда слева */
+    .hero-title-na {
+        display: block !important;
+        transform: rotate(-90deg) !important; /* Поворот */
+        margin: 0 0.5em 0 0 !important;       /* Отступ справа до текста */
+        font-size: 0.4em !important;          /* Размер ~40% от основного текста */
+        width: auto !important;
+        height: auto !important;
+        flex-shrink: 0 !important;            /* Запрещаем сплющивать */
+        line-height: 1 !important;
+    }
+
+    /* Текст "СЕВЕРНОМ КАВКАЗЕ": Запрещаем разрыв слов */
+    .hero-title-rest {
+        white-space: nowrap !important;
+    }
+}
+
+/* ================================================================= */
+/* ПОДЗАГОЛОВОК: СТРОГО В ДВЕ СТРОКИ (FIX) */
+/* ================================================================= */
+@media (max-width: 1199.98px) {
+    
+    .hero-subtitle {
+        /* Контейнер */
+        width: 100% !important;
+        max-width: 90% !important; /* Не прижимаемся к самым краям */
+        margin: 2vh auto 0 auto !important; /* Центрируем сам блок */
+        text-align: center !important;
+    }
+
+    /* Первая строка: "НЕЗАБЫВАЕМЫЕ ВПЕЧАТЛЕНИЯ" */
+    .hero-sub-1 {
+        display: block !important; /* Занимает всю ширину -> след. текст падает вниз */
+        
+        /* Шрифт: мин. 13px, макс 24px, зависит от ширины экрана */
+        font-size: clamp(13px, 4vw, 24px) !important; 
+        
+        letter-spacing: 0.2em !important;
+        line-height: 1.4 !important;
+        margin-bottom: 4px !important; /* Маленький отступ до второй строки */
+        text-align: center !important;
+    }
+
+    /* Вторая строка: "В СЕРДЦЕ КАВКАЗСКИХ ГОР" */
+    .hero-sub-2 {
+        display: block !important; /* Тоже отдельный блок */
+        
+        font-size: clamp(13px, 4vw, 24px) !important;
+        
+        letter-spacing: 0.2em !important;
+        line-height: 1.4 !important;
+        margin-left: 0 !important; /* Сбрасываем старые отступы */
+        text-align: center !important;
+    }
 }
