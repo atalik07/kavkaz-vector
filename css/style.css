@@ -1036,48 +1036,164 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 }
 
 /* ================================================================= */
-/* ФИНАЛЬНЫЙ РЕМОНТ ПОЭКРАННОГО СКРОЛЛА (SCROLL SNAP) */
-/* Вставлять в самый конец файла! */
+/* ФИНАЛЬНЫЙ РЕМОНТ SCROLL SNAP (С УМНЫМИ КОНТАКТАМИ) */
 /* ================================================================= */
 @media (max-width: 1199.98px) {
     
-    /* 1. Главный контейнер сайта */
     html, body {
-        /* Обязательно задаем высоту, иначе браузер не знает к чему привязываться */
         height: 100% !important;
         margin: 0 !important;
-        
-        /* Включаем физику прилипания */
         scroll-snap-type: y mandatory !important;
         scroll-behavior: smooth !important;
-        
-        /* Разрешаем прокрутку по Y, запрещаем по X */
         overflow-y: scroll !important; 
         overflow-x: hidden !important;
     }
 
-    /* 2. Секции, к которым липнем */
+    /* 1. ОБЫЧНЫЕ СЕКЦИИ (Hero, Туры, О нас) */
+    /* Они влезают в экран, им делаем жесткий снэп */
     .hero,
     .section-tours,
-    .section-about,
-    .section-contacts {
-        /* Прилипаем верхней границей секции к верху экрана */
+    .section-about {
         scroll-snap-align: start !important;
-        
-        /* Заставляет остановиться на секции, нельзя пролететь мимо инерцией */
         scroll-snap-stop: always !important;
-        
-        /* Жесткая высота экрана мобильного устройства */
-        height: 100dvh !important;
+        height: 100dvh !important; /* Строго экран */
         min-height: 100dvh !important;
-        
-        /* Скрываем всё, что вылезает за пределы секции (важно для чистого скролла) */
-        overflow: hidden !important;
-        
-        /* Убедимся, что секция - это блок */
+        overflow: hidden !important; /* Обрезаем лишнее */
         display: flex !important;
         flex-direction: column !important;
     }
+
+    /* 2. СЕКЦИЯ КОНТАКТОВ (ИСКЛЮЧЕНИЕ!) */
+    /* Она длинная, ей разрешаем растягиваться */
+    .section-contacts {
+        /* Всё ещё прилипаем к её началу */
+        scroll-snap-align: start !important;
+        scroll-snap-stop: always !important;
+        
+        /* ВАЖНО: Убираем фикс высоту, ставим min-height */
+        height: auto !important; 
+        min-height: 100dvh !important; 
+        
+        /* Разрешаем контенту вылезать вниз */
+        overflow: visible !important; 
+        display: flex !important;
+        flex-direction: column !important;
+        
+        /* Добавляем отступ снизу, чтобы подвал не прилипал к краю */
+        padding-bottom: 40px !important;
+    }
+    
+    /* Если футер лежит ОТДЕЛЬНО от section-contacts, то ему тоже нужно snap-align */
+    /* Если футер ВНУТРИ section-contacts, то это не нужно */
+    .footer {
+        scroll-snap-align: end; /* Прилипаем к концу страницы */
+    }
 }
+
+/* ================================================================= */
+/* ФИКС МОБИЛЬНОГО МЕНЮ (КРУПНЫЙ ТЕКСТ И ИКОНКИ) */
+/* ================================================================= */
+@media (max-width: 1199.98px) {
+    
+    /* 1. Увеличиваем отступы в списке меню */
+    .nav-list {
+        gap: 30px !important; /* Больше воздуха между пунктами */
+        padding: 40px 0 20px 0 !important;
+        width: 100%;
+    }
+
+    /* 2. ССЫЛКИ МЕНЮ (ТУРЫ, О НАС...) */
+    .nav-link {
+        /* БЫЛО: ~4px. СТАЛО: Минимум 24px, резиново до 32px */
+        font-size: clamp(24px, 6vw, 32px) !important;
+        
+        /* Делаем жирнее и читабельнее */
+        font-weight: 700 !important;
+        letter-spacing: 0.15em !important;
+        text-transform: uppercase;
+        
+        /* Увеличиваем область клика */
+        display: block;
+        padding: 5px 0;
+    }
+
+    /* 3. КОНТЕЙНЕР СОЦ. ИКОНОК */
+    .mobile-socials {
+        display: flex !important;
+        justify-content: center;
+        gap: 25px !important; /* Расстояние между кружками */
+        margin-top: 20px !important;
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        width: 80%; /* Полоска не на всю ширину */
+    }
+
+    /* 4. САМИ ИКОНКИ (КРУЖКИ) */
+    .mobile-socials .social-link {
+        /* Делаем крупные кнопки под палец (45x45px) */
+        width: 48px !important;
+        height: 48px !important;
+        
+        /* Размер значка внутри */
+        font-size: 22px !important;
+        
+        /* Фон, чтобы их было видно */
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff !important;
+    }
+}
+/* ================================================================= */
+/* ФИКС МЕНЮ ДЛЯ АЛЬБОМНОЙ ОРИЕНТАЦИИ (LANDSCAPE) */
+/* ================================================================= */
+@media (max-width: 950px) and (orientation: landscape) {
+    
+    /* 1. Сжимаем отступы самого списка */
+    .nav-list {
+        padding: 10px 0 !important;
+        gap: 15px !important; /* Уменьшаем расстояние между пунктами */
+    }
+
+    /* 2. Уменьшаем шрифт ссылок */
+    .nav-link {
+        font-size: 20px !important; /* Компактный размер */
+        padding: 2px 0 !important;
+    }
+
+    /* 3. Уменьшаем блок с иконками */
+    .mobile-socials {
+                display: flex !important;
+        justify-content: center !important; /* Центрируем содержимое (иконки) */
+        
+        /* ГЛАВНОЕ: Центрируем сам блок контейнера */
+        width: 100% !important; /* Растягиваем на всю ширину */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+        padding-bottom: 5px !important;
+        gap: 20px !important;
+    }
+
+    /* 4. Уменьшаем сами иконки */
+    .mobile-socials .social-link {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 16px !important;
+    }
+
+    /* 5. Гарантируем, что меню можно прокрутить, если даже так не влезет */
+    .nav.open {
+        overflow-y: auto !important;
+        max-height: 85vh !important; /* Оставляем место снизу */
+        /* Улучшаем скролл */
+        -webkit-overflow-scrolling: touch; 
+    }
+}
+
 
 
