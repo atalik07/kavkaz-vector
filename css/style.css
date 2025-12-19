@@ -577,15 +577,87 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     .hamburger { display: flex; flex-direction: column; gap: 5px; width: 24px; height: 22px; padding: 0; border: none; background: transparent; justify-content: center; margin-left: 16px !important; }
     .nav { position: fixed; top: var(--header-height); left: 10px; right: 10px; background: rgba(5,7,11,0.95); backdrop-filter: blur(15px); padding: 0; transform: translateY(-20px); opacity: 0; pointer-events: none; transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
     .nav.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-    .header:not(.scrolled) .nav.open { top: calc(var(--header-height) - 15px); background: rgba(21, 27, 37, 0.9); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: var(--radius-card); }
+    .header:not(.scrolled) .nav.open { top: calc(var(--header-height) + 1vh); background: rgba(21, 27, 37, 0.9); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: var(--radius-card); }
     .header.scrolled .nav.open { left: 0; right: 0; border-radius: 0; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
     .nav-list { flex-direction: column; padding: 20px 0; gap: 20px; align-items: center; }
     .mobile-socials { display: flex !important; justify-content: center; padding: 15px 0; margin: 0 20px; border-top: 1px solid rgba(255, 255, 255, 0.1); gap: 30px; }
 
-    /* --- HERO --- */
-    .hero { min-height: 100vh; height: auto !important; min-height: 100dvh; display: block; }
-    .hero-content { width: 100% !important; box-sizing: border-box; text-align: center; margin-top: 23vh; }
-    .hero-title-line-2 { display: flex; flex-wrap: wrap; justify-content: center; margin-left: -10px; }
+    /* --- HERO MOBILE FIXES --- */
+    .hero { 
+        /* Возвращаем flex, чтобы управлять вертикальным положением */
+        display: flex; 
+        flex-direction: column;
+        /* 100dvh — это "честная" высота экрана телефона (учитывает адресную строку браузера) */
+        height: 100dvh !important; 
+        min-height: 100dvh; 
+    }
+
+    .hero-inner { 
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        /* Это распределит элементы: Заголовок улетит вверх/центр, Карточки прижмутся к низу */
+        justify-content: space-between; 
+        
+        padding-top: 15vh; /* Отступ сверху, чтобы заголовок не налез на лого */
+        padding-bottom: 4vh; /* Отступ снизу от края экрана */
+    }
+
+    .hero-content { 
+        width: 100% !important; 
+        text-align: center; 
+        
+        /* Магия Flexbox: margin-top: auto и margin-bottom: auto центрируют блок 
+           в доступном свободном пространстве над карточками */
+        margin-top: auto; 
+        margin-bottom: auto; 
+    }
+    
+    .hero-title-line-2 { 
+        display: flex; 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        margin-left: -10px; 
+    }
+
+    /* БЛОК ПРЕИМУЩЕСТВ */
+    .hero-advantages { 
+        /* margin-top: auto гарантирует, что этот блок улетит в самый низ контейнера */
+        margin-top: auto; 
+        width: 100%;
+        max-width: 100%;
+        
+        /* Превращаем строку в сетку 2x2 */
+        flex-wrap: wrap; 
+        justify-content: center;
+        gap: 8px; /* Небольшой зазор */
+    }
+
+    .adv-card { 
+        /* Карточка занимает ~48% ширины, чтобы встать по 2 в ряд */
+        flex: 0 0 calc(50% - 8px); 
+        min-width: 0;
+        padding: 12px;
+        /* Чуть темнее фон для читаемости на телефоне */
+        background: rgba(5, 7, 10, 0.85); 
+    }
+    
+    /* Увеличиваем иконки, потому что 2.5vw на телефоне — это микроскопически мало */
+    .adv-icon { 
+        width: 28px; 
+        height: 28px; 
+        margin-bottom: 6px; 
+    }
+    .adv-icon i { font-size: 14px; }
+    
+    .adv-text { 
+        font-size: 11px; /* Читаемый размер шрифта */
+        margin-bottom: 4px; 
+    }
+
+    /* Скрываем подсказку "Листайте вниз", так как карточки и так внизу, места нет */
+    .hero-scroll-hint { display: none; }
+
 
     /* ========================================================================= */
     /* --- СЕКЦИЯ "О НАС": УМНАЯ АДАПТАЦИЯ (Line-Clamp + Кнопка) --- */
