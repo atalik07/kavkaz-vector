@@ -439,8 +439,8 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .about-text { font-size: var(--font-body); color: var(--color-text-muted); line-height: 1.6; }
 
 .contacts-kicker { text-align: center; display: block; width: 100%; margin-bottom: 40px; } 
-.contacts-inner { width: 100%; max-height: 80%; flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
-.contacts-left { display: flex; flex-direction: column; gap: 24px; height: 100%; } 
+/* .contacts-inner { width: 100%; max-height: 80%; flex-grow: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; } */
+.contacts-left { display: flex; flex-direction: column; gap: 40px; height: 100%; } 
 .contacts-card, .contact-form { 
     background: var(--color-bg-card); border-radius: var(--radius-card); padding: 20px; 
      border: 1px solid var(--color-border-soft); display: flex; flex-direction: column;  flex-shrink: 0;
