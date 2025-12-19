@@ -137,11 +137,60 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     background: radial-gradient(circle at top, #141b25 0%, #05070b 55%, #000000 100%);
     display: flex; align-items: center; justify-content: center;
 }
-.preloader-inner { text-align: center; }
-.preloader-logo { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-/* .preloader-logo .logo-icon { width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle at 25% 25%, #ffe9da 0, #ff4b2b 40%, #e6351a 100%); } */
-.preloader-logo .logo-text { font-size: var(--font-body); text-transform: uppercase; color: var(--color-text-muted); }
-.spinner { width: 38px; height: 38px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.14); border-top-color: var(--color-accent); animation: spin 0.9s linear infinite; }
+
+/* Контейнер для всего содержимого прелоадера */
+.preloader-inner { 
+    display: flex; 
+    align-items: center; 
+    gap: 20px; /* Отступ между крутящимся лого и текстом */
+}
+
+/* Обертка для логотипа и спиннера */
+.preloader-icon-wrapper {
+    position: relative;
+    width: 60px;  /* Размер всей конструкции */
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Сама картинка логотипа внутри */
+.preloader-icon-wrapper .logo-mark {
+    width: 32px; /* Чуть меньше контейнера, чтобы влезть в кольцо */
+    height: 32px;
+    position: relative;
+    z-index: 2; /* Логотип поверх спиннера */
+}
+
+/* Спиннер - теперь это абсолютное кольцо вокруг логотипа */
+.spinner { 
+    position: absolute;
+    inset: 0; /* Растягиваем на весь wrapper (60x60) */
+    border-radius: 50%; 
+    border: 3px solid rgba(255, 255, 255, 0.1); /* Тусклое кольцо */
+    border-top-color: var(--color-accent); /* Яркий сектор */
+    animation: spin 1s linear infinite; 
+    z-index: 1;
+}
+
+/* Текстовая часть */
+.preloader-text { 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Выравниваем строки по левому краю! */
+    justify-content: center;
+}
+
+.preloader-text span {
+    font-family: var(--font-display);
+    font-size: clamp(14px, 1.2vw, 18px); 
+    text-transform: uppercase; 
+    color: var(--color-text-muted); 
+    line-height: 1.1; /* Чтобы строки стояли плотнее */
+    letter-spacing: 0.1em;
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* --- ЕДИНЫЙ СТИЛЬ КНОПОК ------------ --- */
