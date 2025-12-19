@@ -774,6 +774,9 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 @media (max-width: 768px) {
     /* На мобиле карточка чуть уже экрана, чтобы было видно следующую */
     .swiper-slide.tour-card { width: 85vw; }
+        #backToTop {
+        display: none !important;
+    }
 }
 
 @media (max-width: 450px) {
@@ -1031,4 +1034,50 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
        text-align: left !important;
     }
 }
+
+/* ================================================================= */
+/* ФИНАЛЬНЫЙ РЕМОНТ ПОЭКРАННОГО СКРОЛЛА (SCROLL SNAP) */
+/* Вставлять в самый конец файла! */
+/* ================================================================= */
+@media (max-width: 1199.98px) {
+    
+    /* 1. Главный контейнер сайта */
+    html, body {
+        /* Обязательно задаем высоту, иначе браузер не знает к чему привязываться */
+        height: 100% !important;
+        margin: 0 !important;
+        
+        /* Включаем физику прилипания */
+        scroll-snap-type: y mandatory !important;
+        scroll-behavior: smooth !important;
+        
+        /* Разрешаем прокрутку по Y, запрещаем по X */
+        overflow-y: scroll !important; 
+        overflow-x: hidden !important;
+    }
+
+    /* 2. Секции, к которым липнем */
+    .hero,
+    .section-tours,
+    .section-about,
+    .section-contacts {
+        /* Прилипаем верхней границей секции к верху экрана */
+        scroll-snap-align: start !important;
+        
+        /* Заставляет остановиться на секции, нельзя пролететь мимо инерцией */
+        scroll-snap-stop: always !important;
+        
+        /* Жесткая высота экрана мобильного устройства */
+        height: 100dvh !important;
+        min-height: 100dvh !important;
+        
+        /* Скрываем всё, что вылезает за пределы секции (важно для чистого скролла) */
+        overflow: hidden !important;
+        
+        /* Убедимся, что секция - это блок */
+        display: flex !important;
+        flex-direction: column !important;
+    }
+}
+
 
