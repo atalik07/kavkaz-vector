@@ -314,7 +314,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
     position: relative; height: 100dvh; display: flex; flex-direction: column; justify-content: flex-end; 
     color: #ffffff; overflow: hidden;
     background: linear-gradient(to bottom, transparent 0%, transparent 40%, rgba(2, 4, 11, 0) 55%, rgba(2, 4, 11, 0.6) 85%, var(--color-bg-main) 100%),
-    url("../img/hero-elbrus.jpg");
+    url("../img/hero-elbrus.webp");
     background-size: cover; background-position: top center;
 }
 
