@@ -944,3 +944,91 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         text-align: center !important;
     }
 }
+
+/* ================================================================= */
+/* ФИНАЛЬНЫЙ ФИКС HERO: ПРАВИЛЬНЫЙ ПЕРЕНОС И РАЗМЕРЫ (VW) */
+/* ================================================================= */
+@media (max-width: 1199.98px) {
+    
+    .container{
+        max-width: 90%;
+        /* padding: 0 0; */
+    }
+
+    .hero-content {
+        padding: 0 5px; /* Минимальный зазор от краев */
+        overflow: hidden; /* Страховка */
+    }
+
+    /* 1. Первая строка: "ПРИКЛЮЧЕНИЯ" */
+    .hero-title-line-1 {
+        display: flex !important;
+        flex-direction: row;
+        /* Выравниваем по ВЕРХУ, чтобы "НА" встало напротив "СЕВЕРНОМ" */
+        align-items: flex-start; 
+        justify-content: flex-start;
+        width: 100%;
+        font-size: 8vw !important;
+    }
+
+    /* 2. Блок второй строки */
+    .hero-title-line-2 {
+        display: flex !important;
+        flex-direction: row;
+        /* Выравниваем по ВЕРХУ, чтобы "НА" встало напротив "СЕВЕРНОМ" */
+        align-items: flex-start; 
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    /* Частица "НА" */
+    .hero-title-na {
+        flex-shrink: 0;
+        transform: rotate(-90deg) !important;
+        
+        /* Визуальная подгонка, чтобы центр "НА" совпал с центром букв "СЕВЕРНОМ" */
+        margin-top: 0.6em !important; 
+        margin-right: 12px !important;
+        
+        /* Размер чуть меньше текста */
+        font-size: 5vw !important; 
+        width: 1em; /* Фикс ширина, чтобы не прыгало */
+        display: block;
+    }
+
+    /* Текст "СЕВЕРНОМ КАВКАЗЕ" */
+    .hero-title-rest {
+        /* Разрешаем перенос! */
+        white-space: normal !important; 
+        text-align: left;
+        flex: 1;
+        
+        /* Шрифт 11% от ширины экрана. */
+        font-size: 8vw !important;
+        line-height: 1.1;
+        word-wrap: break-word;
+    }
+}
+
+@media (max-width: 1023px) and (orientation: landscape) {
+
+        .hero-title-line-1 {
+        font-size: 6vh !important; /* Твои 4vw */
+        margin-bottom: 0 !important;
+    }
+     .hero-title-rest {
+        font-size: 4vw !important;
+    }
+
+    .hero-title-na {
+        font-size: 2vw !important; /* Пропорционально уменьшаем "НА" */
+        margin-right: 8px !important;
+        margin-top: 0.5em !important;
+    }
+
+    .hero-sub-1, .hero-sub-2 {
+       font-size: 2vw !important;
+       text-align: left !important;
+    }
+}
+
