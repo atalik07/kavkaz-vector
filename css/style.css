@@ -487,9 +487,12 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 .footer-inner { display: flex; justify-content: space-between; align-items: center; }
 .footer-links { display: flex; gap: 20px; }
 
-#backToTop { position: fixed; right: 22px; bottom: 24px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.28); background: rgba(124,127,131,0.3); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.2s; z-index: 900; }
+#backToTop { position: fixed; right: 2vw; bottom: 2vw; width: 3vw; height: 3vw; 
+    border-radius: 50%; border: 1px solid rgba(255,255,255,0.28); background: rgba(124,127,131,0.3); 
+    color: #ffffffc0; display: flex; align-items: center; justify-content: center; opacity: 0; 
+    pointer-events: none; transition: 0.2s; z-index: 900; font-size: clamp(1vw, 1.2vw, 1.3vw); }
 #backToTop.visible { opacity: 1; pointer-events: auto; }
-#backToTop:hover { background: var(--color-accent); }
+#backToTop:hover { background: var(--color-accent); color: var(--color-text-main);}
 
 /* Hero Entrance Animations */
 .hero-title-line, .hero-subtitle, .hero-advantages .adv-card { opacity: 0; transform: translateY(30px); }
