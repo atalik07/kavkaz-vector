@@ -774,9 +774,9 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
 @media (max-width: 768px) {
     /* На мобиле карточка чуть уже экрана, чтобы было видно следующую */
     .swiper-slide.tour-card { width: 85vw; }
-        #backToTop {
+        /* #backToTop {
         display: none !important;
-    }
+    } */
 }
 
 @media (max-width: 450px) {
@@ -852,6 +852,8 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         font-size: 10px !important;
         white-space: normal; /* Разрешаем перенос текста */
     }
+
+
 }
 /* ================================================================= */
 /* ВОЗВРАЩЕНИЕ ПОЭКРАННОГО СКРОЛЛА (NATIVE CSS SNAP) */
@@ -875,6 +877,9 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         
         /* Заставляет браузер обязательно остановиться на секции, не пролетая мимо */
         scroll-snap-stop: always; 
+    }
+        .section-kicker {
+        font-size: 0.8em;
     }
 }
 
@@ -1126,7 +1131,7 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         padding-top: 20px !important;
         padding-bottom: 20px !important;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        width: 80%; /* Полоска не на всю ширину */
+        /* width: 80%; Полоска не на всю ширину */
     }
 
     /* 4. САМИ ИКОНКИ (КРУЖКИ) */
@@ -1194,6 +1199,126 @@ h1, h2, h3, .section-title, .form-title, .logo-title {
         -webkit-overflow-scrolling: touch; 
     }
 }
+
+/* ================================================================= */
+/* ФИНАЛЬНЫЙ АЛГОРИТМ "О НАС" (СТРОГАЯ МАТЕМАТИКА) */
+/* Для iPad Mini/Pro (Portrait) и Mobile Landscape */
+/* ================================================================= */
+@media (min-width: 768px) and (max-width: 1199.98px), 
+       (orientation: landscape) and (max-height: 600px) {
+
+    /* 1. ГЛАВНЫЙ КОНТЕЙНЕР: СЕТКА ЭКРАНА */
+    .section-about .container {
+        height: 100dvh !important; /* Строго высота экрана */
+        
+        /* Сверху: отступаем высоту шапки (чтобы не налезло) */
+        padding-top: var(--header-height) !important;
+        
+        /* Снизу: отступаем высоту шапки (симметрия) */
+        padding-bottom: var(--header-height) !important;
+        
+        /* Внутри: выстраиваем вертикаль */
+        display: flex !important;
+        flex-direction: column !important;
+        
+        /* Главное: центруем "Заголовок + Контент" в оставшемся месте */
+        justify-content: center !important; 
+    }
+
+    /* 2. ЗАГОЛОВОК СЕКЦИИ ("О НАС") */
+    .section-about .section-header {
+        /* Заголовок не должен сжиматься */
+        flex-shrink: 0 !important;
+        
+        /* Отступ от заголовка до картинки */
+        margin-top: 3vh !important;
+    }
+
+    /* 3. БЛОК INNER (ОБЕРТКА КАРТИНКИ И ТЕКСТА) */
+    .about-inner {
+        /* Высота: пусть картинка решает, но не больше доступного места */
+        /* calc(100% - заголовок) - грубо говоря, занимает всё оставшееся место */
+        flex-grow: 1 !important; 
+        
+        /* Ограничиваем, чтобы на квадратных экранах не улетело */
+        max-height: 75vh !important; 
+        min-height: 0 !important; /* Важно для работы flex-shrink */
+
+        display: flex !important;
+        align-items: stretch !important; /* Растягиваем высоту колонок одинаково */
+        gap: 30px !important;
+    }
+
+    /* 4. КАРТИНКА (ЛЕВАЯ КОЛОНКА) */
+    .about-media {
+        flex: 1 !important; /* 50% ширины */
+        height: 100% !important;
+    }
+    
+    .about-figure {
+        height: 100% !important;
+        width: 100% !important;
+    }
+    
+    .about-figure img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+
+    /* 5. КОНТЕНТ (ПРАВАЯ КОЛОНКА) */
+    .about-content {
+        flex: 1 !important; /* 50% ширины */
+        height: 100% !important; /* Высота равна высоте картинки */
+        
+        display: flex !important;
+        flex-direction: column !important;
+        
+        /* Верхний отступ = радиусу скругления */
+        padding-top: var(--radius-card) !important;
+        
+        /* Нижний отступ = радиусу скругления */
+        padding-bottom: var(--radius-card) !important;
+        
+        /* Сбрасываем лишнее */
+        justify-content: flex-start !important;
+    }
+
+    /* 6. ТЕКСТ (ЗАНИМАЕТ ВСЁ СВОБОДНОЕ МЕСТО) */
+    .about-text-wrapper {
+        /* flex: 1 !important;  */
+        min-height: 0 !important; /* Магия CSS для работы overflow внутри flex */
+        
+        /* ОБРЕЗКА ТЕКСТА (БЕЗ ПОЛОВИНОК СТРОК) */
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 18; /* Ограничиваем кол-во строк (подбери число) */
+        overflow: hidden !important; /* Скрываем лишнее */
+        
+        margin-bottom: 20px !important; /* Зазор до кнопки */
+    }
+
+    .about-text {
+        font-size: clamp(14px, 1.8vw, 16px) !important;
+        line-height: 1.5 !important;
+
+        margin: 0 !important;
+    }
+
+    /* 7. КНОПКА (ФИКСИРОВАННЫЙ БЛОК ВНИЗУ) */
+    .section-about .btn {
+        flex-shrink: 0 !important; /* Не сжиматься */
+        
+        align-self: flex-start !important; /* Прижать влево */
+        /* width: auto !important; */
+        
+        /* Так как у родителя есть padding-bottom: radius, 
+           кнопка визуально встанет ровно над началом скругления */
+    }
+}
+
+
 
 
 
